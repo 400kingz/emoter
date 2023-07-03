@@ -1,8 +1,14 @@
-
+import { type NextPage } from "next";
 import Head from "next/head";
 import { UserButton, SignIn } from "@clerk/nextjs";
 
-export default function Home() {
+import { api } from "~/utils/api";
+
+
+
+const Home: NextPage = () => {
+  const {data} = api.posts.getAll.useQuery();
+
 
   return (
     <>
@@ -18,11 +24,21 @@ export default function Home() {
           <button className="bg-rose-500 text-white p-2 m-2 rounded-xl"
           >Motes</button>
           <h1 className="uppercase text-6xl font-bold text-white">Emoter</h1>
-          <div className="flex items-center">
+          <div className="flex items-center p-2 m-2">
             <UserButton />
           </div>
         </header>
+        <div className="flex flex-col items-center">
+          <h2 className="text-4xl font-bold text-white">Posts</h2>
+          <div className="flex flex-col items-center">
+            {data?.map((post) => (
+              <div key={post.id}>{post.content}</div>
+            ))}
+          </div>
+        </div>
       </main>
     </>
   );
-}
+};
+
+export default Home;

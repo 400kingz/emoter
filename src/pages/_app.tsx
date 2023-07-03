@@ -1,16 +1,25 @@
 import { type AppType } from "next/app";
+
 import { api } from "~/utils/api";
+
 import "~/styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
-import "~/styles/styles.modules.css";
+import Head from "next/head";
+
+
+
 
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-  <ClerkProvider  {...pageProps} appearance={{baseTheme: dark }}>
-    <Component {...pageProps} />
-  </ClerkProvider>
+    <ClerkProvider {...pageProps}>
+      <Head>
+        <title>Emoter</title>
+        <meta name="description" content="💭" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Component {...pageProps} />
+    </ClerkProvider>
   );
 }
 
